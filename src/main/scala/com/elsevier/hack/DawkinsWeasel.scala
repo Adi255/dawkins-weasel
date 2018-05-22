@@ -5,28 +5,21 @@ import scala.util.Random
 
 object DawkinsWeasel {
 
-  private val vocab = List(
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-    ' '
-  )
+  private val Vocab = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".toCharArray.toList
+  private val TargetPhrase = "METHINKS IT IS LIKE A WEASEL"
 
   def generateSeedPhrase(): String =
-    (0 to 27).map(_ => vocab(Random.nextInt(vocab.length))).mkString
-
-  private val targetPhrase = "METHINKS IT IS LIKE A WEASEL"
+    (0 to 27).map(_ => Vocab(Random.nextInt(Vocab.length))).mkString
 
   def main(args: Array[String]): Unit = {
 
     @tailrec
     def findSolution(words: List[String], iterations: Int): Unit = {
-//      if (iterations % 10 == 0)
-//        println(s"iteration $iterations, word ${words.head}")
       val mutatedWords =
-        words.map(phrase => PhraseMutator.mutatePhrase(phrase, vocab))
+        words.map(phrase => PhraseMutator.mutatePhrase(phrase, Vocab))
       val mutatedWithScore =
         mutatedWords.map(phrase => {
-          (phrase, Scorer.altScore(phrase, targetPhrase))
+          (phrase, Scorer.altScore(phrase, TargetPhrase))
         })
       mutatedWithScore.find(_._2 == 28) match {
         case Some(winner) => println(s"Complete after $iterations iterations, winner ${winner._1}")

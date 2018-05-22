@@ -12,14 +12,6 @@ class ScorerSpec extends FlatSpec with Matchers {
     score shouldBe 8
   }
 
-  it should "work out there's an offset to the chars" in {
-    val input = "METHINKS ITI IS LIKE A WEASE"
-    val target = "METHINKS IT IS LIKE A WEASEL"
-
-    val score = Scorer.altScore(input, target)
-    println(s"score $score")
-  }
-
   it should "get 28" in {
     val input = "METHINKS IT IS LIKE A WEASEL"
     val target = "METHINKS IT IS LIKE A WEASEL"
